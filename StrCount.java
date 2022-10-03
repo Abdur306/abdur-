@@ -1,3 +1,5 @@
+                                 /*state the count of alpha,numbers,sp.cahrs,space in a sentence*/
+
 import java.util.*;
 class StrCount{
 public static void main(String [] args){
