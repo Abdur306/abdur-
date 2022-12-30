@@ -1,23 +1,25 @@
 import java.util.*;
-class MinMax{
+class Unique{
 public static void main(String [] abu){
 Scanner s=new Scanner(System.in);
 int n=s.nextInt();
 int a[]=new int[n];
+int b[]=new int[n];
 for(int i=0;i<n;i++){
 	a[i]=s.nextInt();
+	b[i]=-1;
 }
-int min=a[0];
-int max=a[0];
-for(int i=1;i<n;i++){
-	if(a[i]>max){
-		max=a[i];
+for(int i=0;i<n;i++){
+	for(int j=i+1;j<n;j++){
+		if(a[i]==a[j]){
+	     b[i]=0;
+		 b[j]=0;		 
+			
+		}
 	}
-	else if(a[i]<min){
-		min=a[i];
+	if(b[i]!=0){
+		System.out.print(a[i]);
 	}
 }
-System.out.println(" MIN is "+min+"MAX is "+max);
-
 }
 }
