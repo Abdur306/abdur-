@@ -35,7 +35,7 @@ public static void signup() {  //SIGNUP STATUS
 		int lowerCount,digitCount, letterCount, specialCount;
 		lowerCount=digitCount=letterCount=specialCount=0;
 		System.out.println("--------------------------------------------------------------------------------------------------");
-		System.out.println("THE USER SHOULD HAVE THE PASS COMBINATION ATLEAST 2 OF EACH UPPER,LOWER,@,# CASES...");
+		System.out.println("THE USER SHOULD HAVE THE PASS COMBINATION ATLEAST 2 OF EACH UPPER,LOWER,@,# CASES...");
 		System.out.println("--------------------------------------------------------------------------------------------------");
 		System.out.println("PLEASE ENTER THE PASSWORD");
 		Scanner s1=new Scanner(System.in);

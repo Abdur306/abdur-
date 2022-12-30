@@ -1,60 +1,106 @@
-import java.util.*;
-public class Rbooking{
-public static void main(String [] args){
-Scanner s=new Scanner(System.in);
-int n;//=s.nextInt();
-do{
-System.out.println("1.Bookings | 2.Cancelation | 3.Chat | 4.Exist");
- n=s.nextInt();
-switch(n){
-	case 1:
-	     System.out.println("Enter  passenger name,age,birth preference");
-		 
-		 break;
-	case 2:
-         System.out.println("enter the passenger id");
+import java.util.Scanner;
 
-         break;
-    case 3:
-	    System.out.println("chat prepared");
+public class Rbooking {
+
+	public static void main(String[] args) {
+		Scanner s=new Scanner(System.in);
+		TicketsBooker tkb=new TicketsBooker();
+		int n;//=s.nextInt();
+		do{
+		System.out.println("1.Bookings | 2.Cancelation | 3.Chat | 4.Exist");
+		 n=s.nextInt();
+		switch(n){
+			case 1:
+			 
+				 System.out.println("enter the passenger name,age,birth_preference");
+				 String p_name=s.next();
+				 int p_age=s.nextInt();
+				 String p_birth_preference=s.next();
+				 tkb.Bookticket(p_name, p_age, p_birth_preference);
+				 //(name,age,birth_preference);
+				  break;
+			case 2:
+		         System.out.println("enter the passenger id");
+
+		         break;
+		    case 3:
+			    System.out.println("chat prepared");
+				
+				break;
+				
+			case 4:
+			     System.out.println("thank you visit again");
+		}
+		}while(n!=4);
+		}
+}
+//		
+//        class Passenger{
+//			int id=1;
+//			String p_name;
+//			int p_age;
+//			String  p_birth_preference;
+//			//String alloted;
+//     	//	int number;
+//		//	int pref;
+//			public Passenger(String  p_name,int p_age,String p_birth_preference){
+//			this.p_name=p_name;
+//			this.p_age=p_age;
+//			this.  p_birth_preference=  p_birth_preference;
+//			this.id=id++;
+//			//alloted="";
+//			//pref=0;
+//			//number=-1;
+//			
+//			}
+//       }
+       
 		
-		break;
+  class TicketsBooker{
+			
+    int []tickets=new int[7];           
+//			 int [] lower_birth= new int [3];
+//			 int [] meddile_birth=new int[3];
+//	         int [] upper_birth=new int[3];
+//		   	 int [] rac=new int[2];
+//			 int [] w_list=new int[2];
+//			 
+			 //book tickets
+			
+			public   void Bookticket(String p_name,int p_age,String p_birth_preference){
+			TicketsBooker tks=new TicketsBooker();
+			for(int i=1;i<=tickets.length;++i) {
+				  if((p_birth_preference.equals("L") && tickets[i]<=2 )||
+				           (p_birth_preference.equals("M") && tickets[i] <=4) ||
+				           (p_birth_preference.equals("U") && tickets[i] <=6))
+				        
+				            System.out.println("Preferred Berth Available");
+				            if(p_birth_preference.equals("L"))
+				            {
+                            System.out.println("L");
+                            
+                            }
+				            else  if(p_birth_preference.equals("M"))
+				            {
+                            System.out.println("M");
+                            }
+				            if(p_birth_preference.equals("U"))
+				            {
+                            System.out.println("U");
+                            }
+			
 		
-	case 4:
-	     System.out.println("thank you visit again");
-}
-}while(n!=4);
-}
-}
-public class Passenger{
-	int id=1;
-	String name;
-	int age;
-	String birth preference;
-	String alloted;
-	int number;
-	public Passenger(String name,int age,String birth preference){
-	this.name=name;
-	this.age=age;
-	this.birth preference=birth preference;
-	this.id=id++;
-	alloted="";
-	number=-1;
-	
-	}
-}
-class Tickets{
-	 final int lower_birth[2];
-	 final int meddile_birth[2];
-	 final int upper_birth[2];
-   	 final int rac[2];
-	 final int w_list[2];
-	
-	public static void Bookings(){
-		
-	}
-	
-}
-class Cancel{
-	
-}
+			}
+			}
+		//	public  void initial_tickets() {
+			//	 int [] lower_birth= new int [3];
+				
+				// int [] meddile_birth=new int[3];
+		         //int [] upper_birth=new int[3];
+			   	 //int [] rac=new int[3];
+				 //int [] w_list=new int[3];
+			}
+  
+		class Cancel{
+			
+		}
