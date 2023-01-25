@@ -1,114 +1,120 @@
-import java.util.Scanner;
-public class Taxi2{
-	public static void main(String[] args){
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Enter the number of taxi :");
-		int n = scan.nextInt();
-		Point obj = new Point(n);
-		obj.home();
-		
-	}
-}
-class Customer{
-	int cid;
-	char p;
-	char d;
-	int pt;
-	int dt;
-	int taxi;
-	int price=100;
-	public Customer(int cid){
-		this.cid=cid;
-	}
-}
+package Level3;
 
-class Point{
-	int n;
-	int cn=0;
-	char taxi[] = new char[10];
-	Customer c[] = new Customer[10];
-	Scanner scan = new Scanner(System.in);
-	public Point(int n){
-		this.n=n;
-		int i;
-		for(i=0;i<n;i++)
-			taxi[i]='A';
+import java.util.Scanner;
+
+public class Taxi {
+		public static void main(String[] args) {
+			Scanner scan = new Scanner(System.in);
+			Working obj = new Working();
+			obj.work();
+		}
 	}
-	public void home(){
-		System.out.println("1.Taxi Booking\n2.Taxi Details");
-		int b=scan.nextInt();
-		if(b==1)
-			travel();
-		else if(b==2)
-			taxidetails();
+	class Taxi1{
+		int taxi_no;
+		int total_earnings;
+		char location;
+		boolean busy;
+		int endtime;
+		
+		public Taxi1(int i,char x){
+			taxi_no=i;
+			total_earnings=0;
+			location=x;
+			busy=false;
+		}
 	}
-	public void travel(){
-		int i,j;
-		System.out.println("Customer ID : ");
-		int id=scan.nextInt();
-		c[cn]=new Customer(id);
-		System.out.println("Pickup Point : ");
-		c[cn].p = scan.next().charAt(0);	
-		System.out.println("Drop Point : ");
-		c[cn].d = scan.next().charAt(0);	
-		System.out.println("Pickup Time : ");
-		c[cn].pt = scan.nextInt();	
-		for(j=0;j<6;j++){
-			for(i=0;i<n;i++){
-			if(taxi[i]==c[cn].p+j || taxi[i]==c[cn].p-j){
-				if(time(i)){
-				System.out.println("taxi "+(i+1)+" is allocated");
-				c[cn].taxi=i;
-				calc();
-				taxi[i]=c[cn].d;
-				cn++;
-				home();
+	class Booking2{
+		int BookingId,CustomerId;
+		int pickuptime,droptime;
+		char from,to;
+		int taxi_no;
+		int fare;
+	}
+
+	class Working{
+		Scanner scan = new Scanner(System.in);
+		public void work() {
+			Taxi1 obj[] = new Taxi1[5];
+			Booking2 book[] = new Booking2[10];
+			
+			for(int i=1;i<5;i++) {
+				obj[i]=new Taxi1(i,'A');
+			}
+			
+			int index=0;
+			boolean flag = true;
+			do {
+				System.out.println("1.Call taxi Booking\t2.Display the Taxi Details\t3.Exit");
+				int ch=scan.nextInt();
+				switch(ch) {
+				case 1:{
+					index++;
+					book[index]=new Booking2();
+					book[index].BookingId=index;
+					System.out.println("CustomerID :");
+					book[index].CustomerId=scan.nextInt();
+					System.out.println("PICKUP POINT :");
+					book[index].from=scan.next().charAt(0);
+					System.out.println("DROP POINT :");
+					book[index].to=scan.next().charAt(0);
+					System.out.println("PICKUP TIME :");
+					book[index].pickuptime=scan.nextInt();
+					int min=100;
+					for(int i=1;i<5;i++){
+						int temp1=Math.abs((int)obj[i].location-(int)book[index].from);
+						if(check(obj[i],book[index].pickuptime)){
+							continue;
+						}
+						if(min>temp1){
+							book[index].taxi_no=i;
+							min=temp1;
+						}
+					}
+						if(min==100) {
+							System.out.println("Taxi cannot be alotted...");
+						}
+						else {
+							System.out.println("Taxi can be allotted");
+							book[index].fare=100+((Math.abs((int)book[index].from-(int)book[index].to)*15)-5)*10;
+							obj[book[index].taxi_no].total_earnings+=book[index].fare;
+							book[index].droptime=book[index].pickuptime+Math.abs((int)book[index].from-(int)book[index].to);
+							obj[book[index].taxi_no].busy=true;
+							obj[book[index].taxi_no].endtime=book[index].droptime;
+							obj[book[index].taxi_no].location=book[index].to;
+							System.out.println("Taxi-"+book[index].taxi_no+" is allotted");
+						}
+					}
+					break;
+				case 2:{
+					for(int i=1;i<5;i++){
+						System.out.println("Taxi-"+i+"\t"+"Total Earnings: Rs. "+obj[i].total_earnings);
+						for(int j=1;j<index;j++){
+							if(book[j].taxi_no==i){
+								System.out.println(book[j].BookingId+" "+book[j].CustomerId+" "+book[j].from+" "+book[j].to+" "+book[j].pickuptime+" "+book[j].droptime+" "+book[j].fare);
+							}
+						}
+					}
+					break;
 				}
-			}
-			}
-		}
-		System.out.println("No taxi available");
-		home();
-	}
-	public void calc(){
-		int count=0,i;
-		if(c[cn].p-c[cn].d>=0)
-			count=c[cn].p-c[cn].d;
-		else if(c[cn].d-c[cn].p>=0)
-			count=c[cn].d-c[cn].p;
-		c[cn].dt=c[cn].pt+count;
-		for(i=6;i<=15*count;i++)
-			c[cn].price=c[cn].price+10;	
-		System.out.println("Price : "+c[cn].price);
-	}
-	public void taxidetails(){
-		int i,j,earn;
-		System.out.println("BookingID CustomerID From To PickupTime DropTime Amount");
-		for(i=0;i<n;i++){
-		earn=0;
-		for(j=0;j<cn;j++){
-			if(c[j].taxi==i){
-				System.out.println(c[j].cid+"\t"+c[j].cid+"\t"+c[j].p+"\t"+c[j].d+"\t"+c[j].pt+"\t"+c[j].dt+"\t"+c[j].price);
-				earn=earn+c[j].price;
-			}
-		}
-		System.out.println("\nTaxi-"+(i+1)+"\t\t"+"Total Earnings: Rs."+earn);
-		}
-		home();
-	}
-	public boolean time(int i){
-		int j,flag=0;
-		for(j=cn-1;j>=0;j--){
-			if(c[j].taxi==i){
-				flag=1;
-				if(c[j].dt<=c[cn].pt){
-					return true;
+				case 3:{
+					flag = false;
+					break;
 				}
-				break;
+				}
+			}while(flag);
+			
+		}	
+		public static boolean check(Taxi1 obj,int pickuptime) {
+			if(!obj.busy) {
+				return false;
 			}
-		}  
-		if(flag==0)
-			return true;
-		return false;
+			else {
+				if(obj.endtime<=pickuptime) {
+					return false;
+				}
+				return true;
+			}
+			
+		}
 	}
-}
+
